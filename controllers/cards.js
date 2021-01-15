@@ -13,7 +13,7 @@ module.exports.createCard = (req, res) => {
     .then((card) => res.send(card))
     .catch((err) => {
       if (err.name === 'ValidationError') res.status(400).send({ message: 'Ошибка валидации' });
-      if (err.name === 'MongooseError') res.status(500).send({message: 'Ошибка сервера'});
+      if (err.name === 'MongooseError') res.status(500).send({ message: 'Ошибка сервера' });
     });
 };
 
