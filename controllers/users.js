@@ -8,18 +8,12 @@ module.exports.getUsers = (req, res) => {
 
 module.exports.getUserById = (req, res) => {
   User.findById(req.params._id)
+    .orFail()
     .then((user) => res.send(user))
     .catch((err) => {
-      if (err.name === 'MongooseError') {
-        res.status(500).send({ message: 'Ошибка сервера' });
-      } else {
-        const regex = /[\W_]/gi;
-        if (regex.test(req.params._id)) {
-          res.status(400).send({ message: 'Переданы некорректные данные' });
-        } else {
-          res.status(404).send({ message: 'Пользователь не найден' });
-        }
-      }
+      if (err.name === 'DocumentNotFoundError') res.status(404).send({ message: 'Данные не найдены' });
+      if (err.name === 'CastError') res.status(400).send({ message: 'Переданы некорректные данные' });
+      if (err.name === 'MongooseError') res.status(500).send({ message: 'Ошибка сервера' });
     });
 };
 
@@ -29,7 +23,7 @@ module.exports.createUser = (req, res) => {
   User.create({ name, about, avatar })
     .then((user) => res.send(user))
     .catch((err) => {
-      if (err.name === 'ValidationError') res.status(400).send({ message: 'Ошибка валидации' });
+      if (err.name === 'CastError') res.status(400).send({ message: 'Переданы некорректные данные' });
       if (err.name === 'MongooseError') res.status(500).send({ message: 'Ошибка сервера' });
     });
 };
@@ -44,7 +38,7 @@ module.exports.updateProfile = (req, res) => {
   })
     .then((user) => res.send(user))
     .catch((err) => {
-      if (err.name === 'ValidationError') res.status(400).send({ message: 'Ошибка валидации' });
+      if (err.name === 'CastError') res.status(400).send({ message: 'Переданы некорректные данные' });
       if (err.name === 'MongooseError') res.status(500).send({ message: 'Ошибка сервера' });
     });
 };
@@ -58,7 +52,7 @@ module.exports.updateAvatar = (req, res) => {
   })
     .then((user) => res.send(user))
     .catch((err) => {
-      if (err.name === 'ValidationError') res.status(400).send({ message: 'Ошибка валидации' });
+      if (err.name === 'CastError') res.status(400).send({ message: 'Переданы некорректные данные' });
       if (err.name === 'MongooseError') res.status(500).send({ message: 'Ошибка сервера' });
     });
 };

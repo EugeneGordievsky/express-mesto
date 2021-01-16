@@ -1,24 +1,24 @@
 {
   "name": "express-react",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "API REST for 'Mesto'",
+  "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Eugene Gordievsky",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "eslint": "^7.16.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.22.1",
     "express": "^4.17.1",
     "mongoose": "^5.11.11"
   },
   "devDependencies": {
-    "nodemon": "^2.0.6"
+    "nodemon": "^2.0.6",
+    "eslint": "^7.16.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1"
   }
 }
