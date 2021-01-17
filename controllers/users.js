@@ -12,8 +12,8 @@ module.exports.getUserById = (req, res) => {
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') res.status(404).send({ message: 'Данные не найдены' });
-      if (err.name === 'CastError') res.status(400).send({ message: 'Переданы некорректные данные' });
-      if (err.name === 'MongooseError') res.status(500).send({ message: 'Ошибка сервера' });
+      if (err.name === 'CastError' || err.name === 'ValidationError') res.status(400).send({ message: 'Переданы некорректные данные' });
+      res.status(500).send({ message: 'Ошибка сервера' });
     });
 };
 
@@ -23,8 +23,8 @@ module.exports.createUser = (req, res) => {
   User.create({ name, about, avatar })
     .then((user) => res.send(user))
     .catch((err) => {
-      if (err.name === 'CastError') res.status(400).send({ message: 'Переданы некорректные данные' });
-      if (err.name === 'MongooseError') res.status(500).send({ message: 'Ошибка сервера' });
+      if (err.name === 'CastError' || err.name === 'ValidationError') res.status(400).send({ message: 'Переданы некорректные данные' });
+      res.status(500).send({ message: 'Ошибка сервера' });
     });
 };
 
@@ -38,8 +38,8 @@ module.exports.updateProfile = (req, res) => {
   })
     .then((user) => res.send(user))
     .catch((err) => {
-      if (err.name === 'CastError') res.status(400).send({ message: 'Переданы некорректные данные' });
-      if (err.name === 'MongooseError') res.status(500).send({ message: 'Ошибка сервера' });
+      if (err.name === 'CastError' || err.name === 'ValidationError') res.status(400).send({ message: 'Переданы некорректные данные' });
+      res.status(500).send({ message: 'Ошибка сервера' });
     });
 };
 
@@ -52,7 +52,7 @@ module.exports.updateAvatar = (req, res) => {
   })
     .then((user) => res.send(user))
     .catch((err) => {
-      if (err.name === 'CastError') res.status(400).send({ message: 'Переданы некорректные данные' });
-      if (err.name === 'MongooseError') res.status(500).send({ message: 'Ошибка сервера' });
+      if (err.name === 'CastError' || err.name === 'ValidationError') res.status(400).send({ message: 'Переданы некорректные данные' });
+      res.status(500).send({ message: 'Ошибка сервера' });
     });
 };
