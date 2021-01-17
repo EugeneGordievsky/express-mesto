@@ -12,7 +12,10 @@ module.exports.createCard = (req, res) => {
   Card.create({ name, link, owner: req.user._id })
     .then((card) => res.send(card))
     .catch((err) => {
-      if (err.name === 'CastError' || err.name === 'ValidationError') res.status(400).send({ message: 'Переданы некорректные данные' });
+      if (err.name === 'CastError' || err.name === 'ValidationError') {
+        res.status(400).send({ message: 'Переданы некорректные данные' });
+        return;
+      }
       res.status(500).send({ message: 'Ошибка сервера' });
     });
 };
@@ -22,8 +25,14 @@ module.exports.deleteCard = (req, res) => {
     .orFail()
     .then((card) => res.send({ data: card }))
     .catch((err) => {
-      if (err.name === 'DocumentNotFoundError') res.status(404).send({ message: 'Данные не найдены' });
-      if (err.name === 'CastError' || err.name === 'ValidationError') res.status(400).send({ message: 'Переданы некорректные данные' });
+      if (err.name === 'DocumentNotFoundError') {
+        res.status(404).send({ message: 'Данные не найдены' });
+        return;
+      }
+      if (err.name === 'CastError' || err.name === 'ValidationError') {
+        res.status(400).send({ message: 'Переданы некорректные данные' });
+        return;
+      }
       res.status(500).send({ message: 'Ошибка сервера' });
     });
 };
@@ -33,8 +42,14 @@ module.exports.putLikeCard = (req, res) => {
     .orFail()
     .then((card) => res.send(card))
     .catch((err) => {
-      if (err.name === 'DocumentNotFoundError') res.status(404).send({ message: 'Данные не найдены' });
-      if (err.name === 'CastError' || err.name === 'ValidationError') res.status(400).send({ message: 'Переданы некорректные данные' });
+      if (err.name === 'DocumentNotFoundError') {
+        res.status(404).send({ message: 'Данные не найдены' });
+        return;
+      }
+      if (err.name === 'CastError' || err.name === 'ValidationError') {
+        res.status(400).send({ message: 'Переданы некорректные данные' });
+        return;
+      }
       res.status(500).send({ message: 'Ошибка сервера' });
     });
 };
@@ -44,8 +59,14 @@ module.exports.deleteLikeCard = (req, res) => {
     .orFail()
     .then((card) => res.send(card))
     .catch((err) => {
-      if (err.name === 'DocumentNotFoundError') res.status(404).send({ message: 'Данные не найдены' });
-      if (err.name === 'CastError' || err.name === 'ValidationError') res.status(400).send({ message: 'Переданы некорректные данные' });
+      if (err.name === 'DocumentNotFoundError') {
+        res.status(404).send({ message: 'Данные не найдены' });
+        return;
+      }
+      if (err.name === 'CastError' || err.name === 'ValidationError') {
+        res.status(400).send({ message: 'Переданы некорректные данные' });
+        return;
+      }
       res.status(500).send({ message: 'Ошибка сервера' });
     });
 };
