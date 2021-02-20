@@ -18,7 +18,7 @@ module.exports.getUserById = (req, res, next) => {
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
-        next(new NotFoundError('Нет пользователя с таким ID'));
+        next(new NotFoundError('Пользователь с данным ID не найден'));
       }
       if (err.name === 'CastError' || err.name === 'ValidationError') {
         next(new NotValidError('Переданы некорректные данные'));
@@ -100,7 +100,7 @@ module.exports.login = (req, res, next) => {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
       });
-      res.send(token);
+      res.send(user);
     })
     .catch(() => next(new AuthError('Ошибка авторизации')));
 };
